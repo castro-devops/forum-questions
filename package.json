@@ -1,0 +1,28 @@
+{
+  "name": "forum-questions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/castro-devops/forum-questions.git"
+  },
+  "keywords": [],
+  "author": "Breno Castro",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/castro-devops/forum-questions/issues"
+  },
+  "homepage": "https://github.com/castro-devops/forum-questions#readme",
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "vitest": "^3.1.2"
+  }
+}

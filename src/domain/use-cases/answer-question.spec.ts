@@ -1,0 +1,23 @@
+import { expect, it } from "vitest";
+import { AnswerQuestionUseCase } from "./answer-question";
+import { IAnswersRepository } from "../repositories/@types/answers-repository";
+import { Answer } from "../entities/answer";
+
+const fakeAnswersRepository: IAnswersRepository = {
+  create: async (answer: Answer) => {
+    return;
+  }
+}
+
+it("should be able create an answer", async () => {
+  const answerQuestion = new AnswerQuestionUseCase(fakeAnswersRepository);
+  const answer = answerQuestion.process({
+    instructorId: "in-01",
+    questionId: "an-01",
+    content: "An answer example"
+  });
+
+  expect(answer).toEqual(expect.objectContaining({
+    content: "An answer example"
+  }));
+});
