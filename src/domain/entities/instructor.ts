@@ -1,4 +1,5 @@
-import { Entity } from "@/core/entities/entity";
+import { Entity } from './../../core/entities/entity';
+import { UniqueEntityID } from './../../core/entities/unique-entity-id';
 
 interface IInstructorRequest {
   name: string;
@@ -6,12 +7,12 @@ interface IInstructorRequest {
 
 export class Instructor extends Entity<IInstructorRequest> {
 
-  get name() {
-    return this.props.name;
-  }
-
-  constructor(props : IInstructorRequest, id?: string) {
-    super(props, id);
+  static create(
+    props: IInstructorRequest,
+    id?: UniqueEntityID
+  ) {
+    const instructor = new Instructor(props, id);
+    return instructor;
   }
   
 }

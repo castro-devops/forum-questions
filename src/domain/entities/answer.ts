@@ -1,9 +1,13 @@
+import { Optional } from './../../core/@types/optional';
+import { UniqueEntityID } from './../../core/entities/unique-entity-id';
 import { Entity } from "../../core/entities/entity";
 
 interface IAnswerRequest {
+  authorId: UniqueEntityID;
+  questionId: UniqueEntityID;
   content: string;
-  authorId: string;
-  questionId: string;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 export class Answer extends Entity<IAnswerRequest> {
@@ -12,19 +16,15 @@ export class Answer extends Entity<IAnswerRequest> {
     return this.props.content;
   }
 
-  get authorId() {
-    return this.props.authorId;
-  }
-
-  get questionId() {
-    return this.props.questionId;
-  }
-
-  constructor(
-    props : IAnswerRequest,
-    id?: string
+  static create(
+    props: Optional<IAnswerRequest, 'createdAt'>,
+    id?: UniqueEntityID
   ) {
-    super(props, id);
+    const answer = new Answer({
+      ...props,
+      createdAt: new Date()
+    }, id);
+    return answer;
   }
   
 }
