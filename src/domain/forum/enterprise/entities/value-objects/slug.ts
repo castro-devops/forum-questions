@@ -1,15 +1,13 @@
 export class Slug {
+  public value: string
 
-  public value: string;
-
-  constructor(text: string)
-  {
-    this.value = text;
+  constructor(text: string) {
+    this.value = text
   }
 
   static process(text: string) {
     const textSlug = text
-      .normalize("NFKD")
+      .normalize('NFKD')
       .toLowerCase()
       .trim()
       .replace(/^-/, '')
@@ -19,7 +17,6 @@ export class Slug {
       .replace(/-+/g, '-')
       .replace(/-$/, '')
 
-    return new Slug(textSlug);
+    return new Slug(textSlug)
   }
-
 }

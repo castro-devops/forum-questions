@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,10 @@
   },
   "homepage": "https://github.com/castro-devops/forum-questions#readme",
   "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
     "@types/node": "^22.15.3",
+    "eslint": "^8.57.1",
+    "eslint-plugin-vitest-globals": "^1.5.0",
     "typescript": "^5.8.3",
     "vite-tsconfig-paths": "^5.1.4"
   },
