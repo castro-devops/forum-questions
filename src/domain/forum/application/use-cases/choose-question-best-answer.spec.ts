@@ -1,4 +1,3 @@
-import { DeleteAnswerUseCase } from './delete-answer'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { makeAnswer } from 'test/factories/make-answer'
@@ -9,7 +8,7 @@ import { makeQuestion } from 'test/factories/make-question'
 describe('Choose Question Best Answer', () => {
   let questionRepository: InMemoryQuestionsRepository
   let answerRepository: InMemoryAnswersRepository
-  let sut: DeleteAnswerUseCase
+  let sut: ChooseQuestionBestAnswerUseCase
 
   beforeEach(() => {
     questionRepository = new InMemoryQuestionsRepository()
