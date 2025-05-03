@@ -11,7 +11,7 @@ const fakeAnswersRepository: IAnswersRepository = {
 
 it("should be able create an answer", async () => {
   const answerQuestion = new AnswerQuestionUseCase(fakeAnswersRepository);
-  const answer = answerQuestion.process({
+  const answer = await answerQuestion.process({
     instructorId: "in-01",
     questionId: "an-01",
     content: "An answer example"
