@@ -51,7 +51,7 @@ export class Question extends Entity<IQuestionRequest> {
   }
 
   set title(title: string) {
-    this.props.content = title
+    this.props.title = title
     this.props.slug = Slug.process(title)
     this.touch()
   }
