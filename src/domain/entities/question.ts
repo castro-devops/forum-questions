@@ -1,7 +1,7 @@
-import { Entity } from './../../core/entities/entity';
+import { Entity } from '@/core/entities/entity';
 import dayjs from 'dayjs';
-import { Optional } from './../../core/@types/optional';
-import { UniqueEntityID } from './../../core/entities/unique-entity-id';
+import { Optional } from '@/core/@types/optional';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Slug } from "./value-objects/slug";
 
 interface IQuestionRequest {

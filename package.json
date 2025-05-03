@@ -21,7 +21,8 @@
   "homepage": "https://github.com/castro-devops/forum-questions#readme",
   "devDependencies": {
     "@types/node": "^22.15.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
     "dayjs": "^1.11.13",
