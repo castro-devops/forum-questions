@@ -1,8 +1,12 @@
 export class Slug {
   public value: string
 
-  constructor(text: string) {
+  private constructor(text: string) {
     this.value = text
+  }
+
+  static create(slug: string) {
+    return new Slug(slug)
   }
 
   static process(text: string) {

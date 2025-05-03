@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/castro-devops/forum-questions#readme",
   "devDependencies": {
+    "@faker-js/faker": "^9.7.0",
     "@rocketseat/eslint-config": "^2.2.2",
     "@types/node": "^22.15.3",
     "eslint": "^8.57.1",
