@@ -74,7 +74,7 @@ export class Question extends Entity<IQuestionRequest> {
       {
         ...props,
         slug: props.slug ?? Slug.process(props.title),
-        createdAt: new Date(),
+        createdAt: props.createdAt ?? new Date(),
       },
       id,
     )
