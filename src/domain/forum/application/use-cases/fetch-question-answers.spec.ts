@@ -2,13 +2,18 @@ import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-r
 import { FetchQuestionAnswersUseCase } from './fetch-question-answers'
 import { makeAnswer } from 'test/factories/make-answer'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 
+let answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let answersRepository: InMemoryAnswersRepository
 let sut: FetchQuestionAnswersUseCase
 
 describe('Fetch Question Answers', () => {
   beforeEach(() => {
-    answersRepository = new InMemoryAnswersRepository()
+    answerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
+    answersRepository = new InMemoryAnswersRepository(
+      answerAttachmentsRepository,
+    )
     sut = new FetchQuestionAnswersUseCase(answersRepository)
   })
 
@@ -23,12 +28,15 @@ describe('Fetch Question Answers', () => {
       makeAnswer({ questionId: new UniqueEntityID('question-1') }),
     )
 
-    const { answers } = await sut.process({
+    const result = await sut.process({
       questionId: 'question-1',
       page: 1,
     })
 
-    expect(answers).toHaveLength(3)
+    expect(result.isRight).toBeTruthy()
+    if (result.isRight()) {
+      expect(result.value.answers).toHaveLength(3)
+    }
   })
 
   it('should be able to fetch painated recent questions', async () => {
@@ -38,11 +46,14 @@ describe('Fetch Question Answers', () => {
       )
     }
 
-    const { answers } = await sut.process({
+    const result = await sut.process({
       questionId: 'question-1',
       page: 2,
     })
 
-    expect(answers).toHaveLength(2)
+    expect(result.isRight).toBeTruthy()
+    if (result.isRight()) {
+      expect(result.value.answers).toHaveLength(2)
+    }
   })
 })

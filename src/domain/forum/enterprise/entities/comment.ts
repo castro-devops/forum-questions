@@ -3,7 +3,6 @@ import { Entity } from '@/core/entities/entity'
 
 export interface ICommentProps {
   authorId: UniqueEntityID
-  questionId: UniqueEntityID
   content: string
   createdAt: Date
   updatedAt?: Date

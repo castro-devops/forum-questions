@@ -1,9 +1,15 @@
+import { DomainEvents } from '@/core/events/domain-events'
 import { PaginationParams } from '@/core/repositories/pagination-params'
+import { IQuestionAttachmentsRepository } from '@/domain/forum/application/repositories/contracts/question-attachments-repository'
 import { IQuestionsRepository } from '@/domain/forum/application/repositories/contracts/questions-repository'
 import { Question } from '@/domain/forum/enterprise/entities/question'
 
 export class InMemoryQuestionsRepository implements IQuestionsRepository {
   public items: Question[] = []
+
+  constructor(
+    private questionAttachmentRepository: IQuestionAttachmentsRepository,
+  ) {}
 
   async findById(id: string) {
     const question = this.items.find((item) => item.id.toString() === id)
@@ -27,17 +33,24 @@ export class InMemoryQuestionsRepository implements IQuestionsRepository {
 
   async save(question: Question) {
     const itemIndex = this.items.findIndex((item) => item.id === question.id)
-
     this.items[itemIndex] = question
+
+    DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
   async create(question: Question) {
     this.items.push(question)
+
+    DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
   async delete(question: Question) {
     const itemIndex = this.items.findIndex((item) => item.id === question.id)
 
     this.items.splice(itemIndex, 1)
+
+    this.questionAttachmentRepository.deleteManyByQuestionId(
+      question.id.toString(),
+    )
   }
 }

@@ -4,15 +4,29 @@ import { makeAnswer } from 'test/factories/make-answer'
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { ChooseQuestionBestAnswerUseCase } from './choose-question-best-answer'
 import { makeQuestion } from 'test/factories/make-question'
+import { NotAllowedError } from '@/core/errors/errors/not-allowed.error'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository'
 
 describe('Choose Question Best Answer', () => {
   let questionRepository: InMemoryQuestionsRepository
+  let answerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
+  let questionAttachmentRepository: InMemoryQuestionAttachmentsRepository
   let answerRepository: InMemoryAnswersRepository
   let sut: ChooseQuestionBestAnswerUseCase
 
   beforeEach(() => {
-    questionRepository = new InMemoryQuestionsRepository()
-    answerRepository = new InMemoryAnswersRepository()
+    questionAttachmentRepository = new InMemoryQuestionAttachmentsRepository()
+    questionRepository = new InMemoryQuestionsRepository(
+      questionAttachmentRepository,
+    )
+    answerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
+    answerRepository = new InMemoryAnswersRepository(
+      answerAttachmentsRepository,
+    )
+    answerRepository = new InMemoryAnswersRepository(
+      answerAttachmentsRepository,
+    )
     sut = new ChooseQuestionBestAnswerUseCase(
       answerRepository,
       questionRepository,
@@ -47,11 +61,12 @@ describe('Choose Question Best Answer', () => {
     await questionRepository.create(question)
     await answerRepository.create(answer)
 
-    await expect(
-      sut.process({
-        authorId: new UniqueEntityID().toString(),
-        answerId: answer.id.toString(),
-      }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.process({
+      authorId: new UniqueEntityID().toString(),
+      answerId: answer.id.toString(),
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })
